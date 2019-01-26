@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import axios from "axios";
 
-
 function App() {
   return (
     <Router>
@@ -87,27 +86,41 @@ class Home extends Component {
 }
 
 function Navbar({ user }) {
-  const [inprogress,setInprogress] = useState(1)
-  const [complete,setComplete] = useState(0)
-  
+  const [inprogress, setInprogress] = useState(1);
+  const [complete, setComplete] = useState(0);
+
   const viewInprogress = () => {
-    setInprogress(1)
-    setComplete(0)
-  }
+    setInprogress(1);
+    setComplete(0);
+  };
   const viewComplete = () => {
-    setInprogress(0)
-    setComplete(1)
-  }
+    setInprogress(0);
+    setComplete(1);
+  };
 
   return (
     <div className="fixedElement">
       <div className="user d-flex justify-content-center align-items-center">
         {user}
       </div>
-      <div >
+      <div>
         <div className="row filter d-flex justify-content-center align-items-center">
-          <div className={'col center '+(inprogress ? 'active' : '')} onClick={()=> {viewInprogress()}}>กำลังดำเนินการ</div>
-          <div className={'col center '+(complete ? 'active' : '')} onClick={()=> {viewComplete()}}>งานที่เสร็จแล้ว</div>
+          <div
+            className={"col center " + (inprogress ? "active" : "")}
+            onClick={() => {
+              viewInprogress();
+            }}
+          >
+            กำลังดำเนินการ
+          </div>
+          <div
+            className={"col center " + (complete ? "active" : "")}
+            onClick={() => {
+              viewComplete();
+            }}
+          >
+            งานที่เสร็จแล้ว
+          </div>
         </div>
       </div>
     </div>
@@ -158,7 +171,7 @@ function Schedule() {
   }, []);
   return (
     <div className="container schedule">
-      {task.map((e,index) => {
+      {task.map((e, index) => {
         return (
           <div className="row " key={index}>
             <div className="col ">
@@ -172,9 +185,19 @@ function Schedule() {
 }
 
 function Card({ data }) {
-  const test = () => {
-    console.log(data.reciever);
+  const [loading, setLoading] = useState(false);
+
+  const sendLoacation = async () => {
+    try {
+      setLoading(true);
+      // const res = await axios.post()
+      setLoading(false);
+    } catch (error) {
+    } finally {
+      console.log("send Data");
+    }
   };
+
   return (
     <div className="card container">
       <div className="row">
@@ -187,7 +210,7 @@ function Card({ data }) {
           <button
             className="btn btn-danger"
             onClick={() => {
-              test();
+              sendLoacation();
             }}
           >
             ส่งงาน

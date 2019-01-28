@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import '../css/Layout.css';
+import queryString from 'query-string';
 
 class Header extends Component {
 	constructor() {
@@ -8,6 +9,8 @@ class Header extends Component {
 		this.state = {
 			inprogress: true,
 			complete: false,
+			query: '',
+			user: null,
 		};
 	}
 	GoToInProgress() {
@@ -19,13 +22,21 @@ class Header extends Component {
 		this.props.history.push('/complete');
 	}
 	componentDidMount() {
-		console.log(this.props);
+		const query = queryString.parse(this.props.location.search);
+		if (query.user) {
+			this.setState({ user : query.user });
+			localStorage.setItem('user', query.user);
+
+		} else {
+			const user = localStorage.getItem('user');
+			this.setState({user})
+		}
 	}
 	render() {
 		const { inprogress, complete } = this.state;
 		return (
 			<div className="fixed">
-				<div className="user d-flex justify-content-center align-items-center">user</div>
+				<div className="user d-flex justify-content-center align-items-center">{this.state.user}</div>
 				<div className="row d-flex justify-content-center align-items-center">
 					<div
 						className={'col txt-header pd-1 pointer' + (inprogress ? ' active' : '')}

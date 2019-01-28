@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
+
 import Card from './Card';
 import '../../css/Layout.css';
 
@@ -10,14 +10,7 @@ class InProgress extends Component {
 	}
 
 	componentDidMount() {
-		const query = queryString.parse(this.props.location.search);
-		if (query.user) {
-			this.setState({ query });
-			localStorage.setItem('user', query.user);
-		} else {
-			const user = localStorage.getItem('user');
-			this.setState({ query: { user } });
-		}
+		
 		// const data = await axios.get("https://reqres.in/api/unknown");
 		const data = [
 			{
@@ -69,7 +62,7 @@ class InProgress extends Component {
 							</div>
 						</div>
 					);
-				})}
+				})[0]}
 				<div className="row d-flex justify-content-between topic">
 					<div>ตารางงาน</div>
           <div>0/14 สำเร็จ</div>

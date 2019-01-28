@@ -1,0 +1,14 @@
+.btn-orange {
+    background-image: linear-gradient(to right,rgb(237,101,43) , rgb(233,46,0)) !important;
+    color: white !important;
+  }
+
+.location-icon {
+    width: 40px;
+}
+
+.detail {
+    color: #2E4867;
+    font-size: 0.7rem;
+  }
+  

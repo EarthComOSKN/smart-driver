@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Swal from 'sweetalert2';
 import '../../css/Layout.css';
 import '../../css/Card.css';
 
@@ -7,11 +8,29 @@ class Card extends Component {
 		super();
 		this.state = { coords: {} };
 	}
+	sendData() {}
+	confirmModal() {
+		const {data} = this.props;
+		Swal.fire({
+			title: 'ยืนยันการทำงาน',
+			text: `${data.receiver,data.address,data.phone}`,
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: 'linear-gradient(to right,rgb(237,101,43) , rgb(233,46,0))',
+			cancelButtonColor: 'rgb(129,129,129)',
+			confirmButtonText: 'เย่',
+			reverseButtons: true
+		}).then(result => {
+			if (result.value) {
+				Swal.fire('ดำเนินการสำเร็จ!', '', 'success');
+			}
+		});
+	}
+
 	async showPosition(position) {
 		const { coords } = position;
 		console.log('coords', coords);
 		// this.setState({coords})
-		
 	}
 	componentDidMount() {
 		const app = document.getElementById('container');
@@ -31,7 +50,7 @@ class Card extends Component {
 			<div className="card container p-3" id="container">
 				<div className="row">
 					<div className="col-7">
-						<div className="detail">{data.reciever}</div>
+						<div className="detail">{data.receiver}</div>
 						<div className="detail">{data.address}</div>
 						<div className="detail">{data.phone}</div>
 					</div>
@@ -42,6 +61,7 @@ class Card extends Component {
 								className="btn btn-orange"
 								data-toggle="modal"
 								data-target="#confirmModal"
+								onClick={() => this.confirmModal()}
 							>
 								ส่งงาน
 							</button>
@@ -55,42 +75,6 @@ class Card extends Component {
 							// onClick={() => window.open(`http://maps.google.com?q=${coords.latitude},${coords.longtitude}`)}
 							onClick={() => window.open(`http://maps.google.com?q=48.8583736,2.2922926`)}
 						/>
-					</div>
-				</div>
-				<div
-					class="modal fade"
-					id="confirmModal"
-					tabindex="-1"
-					role="dialog"
-					aria-labelledby="exampleModalLabel"
-					aria-hidden="true"
-				>
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content modal-border">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">
-									ยืนยันการทำงาน
-								</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body d-flex flex-column">
-								<div class="pb-3">dfsfsf</div>
-								<div class="d-flex justify-content-around">
-									<button
-										type="button"
-										class="btn btn-secondary modal-button-width"
-										data-dismiss="modal"
-									>
-										ยกเลิก
-									</button>
-									<button type="button" class="btn btn-orange modal-button-width">
-										ยืนยัน
-									</button>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

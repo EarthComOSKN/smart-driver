@@ -58,7 +58,7 @@ class InProgress extends Component {
 					return (
 						<div className="row" key={index}>
 							<div className="col">
-								<Card data={e} />
+								<Card data={e} inProgress={true}/>
 							</div>
 						</div>
 					);
@@ -71,7 +71,7 @@ class InProgress extends Component {
 					return (
 						<div className="row" key={index}>
 							<div className="col">
-								<Card data={e} />
+								<Card data={e} inProgress={false}/>
 							</div>
 						</div>
 					);

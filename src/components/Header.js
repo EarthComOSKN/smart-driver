@@ -9,7 +9,6 @@ class Header extends Component {
 		this.state = {
 			inprogress: true,
 			complete: false,
-			query: '',
 			user: null,
 		};
 	}
@@ -33,10 +32,10 @@ class Header extends Component {
 		}
 	}
 	render() {
-		const { inprogress, complete } = this.state;
+		const { inprogress, complete,user } = this.state;
 		return (
 			<div className="fixed">
-				<div className="user d-flex justify-content-center align-items-center">{this.state.user}</div>
+				<div className="user d-flex justify-content-center align-items-center">{user}</div>
 				<div className="row d-flex justify-content-center align-items-center">
 					<div
 						className={'col txt-header pd-1 pointer' + (inprogress ? ' active' : '')}

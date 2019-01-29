@@ -12,3 +12,12 @@
     font-size: 0.7rem;
   }
   
+.modal-border {
+    border-radius: 1rem !important;
+    border: none !important;
+}
+
+.modal-button-width {
+    width: 9rem;
+    border-radius: 0.6rem !important;
+}

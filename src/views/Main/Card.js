@@ -19,9 +19,15 @@ class Card extends Component {
 			confirmButtonColor: 'linear-gradient(to right,rgb(237,101,43) , rgb(233,46,0))',
 			cancelButtonColor: 'rgb(129,129,129)',
 			confirmButtonText: 'เย่',
-			reverseButtons: true
+			reverseButtons: true,
+			preConfirm: (data) => {
+				console.log(data);
+				console.log('state',this.state);
+				return 'Complete'
+			}
 		}).then(result => {
 			if (result.value) {
+				console.log(result);
 				Swal.fire('ดำเนินการสำเร็จ!', '', 'success');
 			}
 		});

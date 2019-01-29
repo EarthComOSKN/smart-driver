@@ -10,19 +10,24 @@ class Card extends Component {
 	}
 	sendData() {}
 	confirmModal() {
-		const {data} = this.props;
+		const { data } = this.props;
 		Swal.fire({
 			title: 'ยืนยันการทำงาน',
-			text: `${data.receiver,data.address,data.phone}`,
+			text: `${data.receiver + '\n' + data.address + '\n' + data.phone}`,
 			type: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: 'linear-gradient(to right,rgb(237,101,43) , rgb(233,46,0))',
+			confirmButtonColor: 'rgb(236,86,50)',
 			cancelButtonColor: 'rgb(129,129,129)',
-			confirmButtonText: 'เย่',
-			reverseButtons: true
+			confirmButtonText: 'ยืนยัน',
+			cancelButtonText: 'ยกเลิก',
+			reverseButtons: true,
 		}).then(result => {
 			if (result.value) {
-				Swal.fire('ดำเนินการสำเร็จ!', '', 'success');
+				Swal.fire({
+					confirmButtonColor: 'rgb(236,86,50)',
+					title: 'ดำเนินการสำเร็จ',
+					type: 'success',
+				});
 			}
 		});
 	}
@@ -50,9 +55,9 @@ class Card extends Component {
 			<div className="card container p-3" id="container">
 				<div className="row">
 					<div className="col-7">
-						<div className="detail">{data.receiver}</div>
-						<div className="detail">{data.address}</div>
-						<div className="detail">{data.phone}</div>
+						<div className="detail">ผู้รับ : {data.receiver}</div>
+						<div className="detail">ที่อยู่ : {data.address}</div>
+						<div className="detail">เบอร์ติดต่อ : {data.phone}</div>
 					</div>
 					<div className="col-3 p-0 d-flex align-items-center justify-content-center">
 						{inProgress && (

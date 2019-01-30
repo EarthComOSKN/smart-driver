@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Swal from 'sweetalert2';
 import '../../css/Layout.css';
 import '../../css/Card.css';
+import axios from 'axios';
 
 class Card extends Component {
 	constructor() {
@@ -21,12 +22,23 @@ class Card extends Component {
 			confirmButtonText: 'ยืนยัน',
 			cancelButtonText: 'ยกเลิก',
 			reverseButtons: true,
+			showLoaderOnConfirm: true,
+			allowOutsideClick: () => !Swal.isLoading(),
+			preConfirm: async (data) => {
+				const res = await axios.get('https://api.chucknorris.io/jokes/random')
+				console.log(res);
+				console.log(data);
+				console.log('state',this.state);
+				return res.data.value
+			}
 		}).then(result => {
 			if (result.value) {
 				Swal.fire({
-					confirmButtonColor: 'rgb(236,86,50)',
-					title: 'ดำเนินการสำเร็จ',
-					type: 'success',
+					title:'ดำเนินการสำเร็จ',
+					customClass:'',
+					text:result.value,
+					type:'success',
+					confirmButtonColor:'rgb(236,86,50)'
 				});
 			}
 		});

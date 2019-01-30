@@ -19,7 +19,7 @@ class Card extends Component {
 			showCancelButton: true,
 			confirmButtonColor: 'linear-gradient(to right,rgb(237,101,43) , rgb(233,46,0))',
 			cancelButtonColor: 'rgb(129,129,129)',
-			confirmButtonText: 'เย่',
+			confirmButtonText: 'confirm',
 			reverseButtons: true,
 			showLoaderOnConfirm: true,
 			allowOutsideClick: () => !Swal.isLoading(),

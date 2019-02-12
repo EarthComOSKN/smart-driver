@@ -23,16 +23,21 @@ class Header extends Component {
 	componentDidMount() {
 		const query = queryString.parse(this.props.location.search);
 		if (query.user) {
-			this.setState({ user : query.user });
+			this.setState({ user: query.user });
 			localStorage.setItem('user', query.user);
-
 		} else {
 			const user = localStorage.getItem('user');
-			this.setState({user})
+			this.setState({ user });
+		}
+		//check active-header
+		if (this.props.location.pathname === '/complete') {
+			this.setState({ complete: true, inprogress: false });
+		} else {
+			this.setState({ inprogress: true, complete: false });
 		}
 	}
 	render() {
-		const { inprogress, complete,user } = this.state;
+		const { inprogress, complete, user } = this.state;
 		return (
 			<div className="fixed">
 				<div className="user d-flex justify-content-center align-items-center">{user}</div>

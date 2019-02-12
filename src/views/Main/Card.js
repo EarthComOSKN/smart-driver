@@ -14,7 +14,7 @@ class Card extends Component {
 		const { data } = this.props;
 		Swal.fire({
 			title: 'ยืนยันการทำงาน',
-			text: `${data.receiver + '\n' + data.address + '\n' + data.phone}`,
+			text: `${data.CustName + ' ' + data.Address}`,
 			type: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: 'rgb(236,86,50)',
@@ -22,23 +22,13 @@ class Card extends Component {
 			confirmButtonText: 'ยืนยัน',
 			cancelButtonText: 'ยกเลิก',
 			reverseButtons: true,
-			showLoaderOnConfirm: true,
-			allowOutsideClick: () => !Swal.isLoading(),
-			preConfirm: async (data) => {
-				const res = await axios.get('https://api.chucknorris.io/jokes/random')
-				console.log(res);
-				console.log(data);
-				console.log('state',this.state);
-				return res.data.value
-			}
 		}).then(result => {
 			if (result.value) {
 				Swal.fire({
-					title:'ดำเนินการสำเร็จ',
-					customClass:'',
-					text:result.value,
-					type:'success',
-					confirmButtonColor:'rgb(236,86,50)'
+					title: 'ดำเนินการสำเร็จ',
+					text: result.value,
+					type: 'success',
+					confirmButtonColor: 'rgb(236,86,50)',
 				});
 			}
 		});
@@ -62,14 +52,14 @@ class Card extends Component {
 		}
 	}
 	render() {
-		const { data, inProgress, coords } = this.props;
+		const { data, inProgress, coords, isComplete } = this.props;
 		return (
 			<div className="card container p-3" id="container">
 				<div className="row">
 					<div className="col-7">
-						<div className="detail">ผู้รับ : {data.receiver}</div>
-						<div className="detail">ที่อยู่ : {data.address}</div>
-						<div className="detail">เบอร์ติดต่อ : {data.phone}</div>
+						<div className="detail">ผู้รับ : {data.CustName}</div>
+						<div className="detail">ที่อยู่ : {data.Address}</div>
+						<div className="detail">รหัสของผู้รับ : {data.CustCode}</div>
 					</div>
 					<div className="col-3 p-0 d-flex align-items-center justify-content-center">
 						{inProgress && (
@@ -84,15 +74,22 @@ class Card extends Component {
 							</button>
 						)}
 					</div>
-					<div className="col-2 p-0 d-flex align-items-center pointer justify-content-center">
-						<img
-							className="location-icon"
-							src="https://cdn.iconscout.com/icon/free/png-256/pin-locate-marker-location-navigation-17-32419.png"
-							alt="location-icon"
-							// onClick={() => window.open(`http://maps.google.com?q=${coords.latitude},${coords.longtitude}`)}
-							onClick={() => window.open(`http://maps.google.com?q=48.8583736,2.2922926`)}
-						/>
-					</div>
+					{isComplete ? (
+						<div className="col-2 p-0 d-flex flex-column align-items-center justify-content-center">
+							<i class="fas fa-check-circle"></i>
+							<div className="finish-text">สำเร็จเมื่อ 8:00 น.</div>
+						</div>
+					) : (
+						<div className="col-2 p-0 d-flex align-items-center pointer justify-content-center">
+							<img
+								className="location-icon"
+								src="https://cdn.iconscout.com/icon/free/png-256/pin-locate-marker-location-navigation-17-32419.png"
+								alt="location-icon"
+								// onClick={() => window.open(`http://maps.google.com?q=${coords.latitude},${coords.longtitude}`)}
+								onClick={() => window.open(`http://maps.google.com?q=48.8583736,2.2922926`)}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		);

@@ -1,12 +1,12 @@
-import React,{Component} from 'react';
-
+import React, { Component } from 'react';
+import Card from './Card';
 class Complete extends Component {
-    constructor() {
-        super();
-        this.state = {}
-    }
-    componentDidMount() {
-        const data = [
+	constructor() {
+		super();
+		this.state = { completeTasks: [] };
+	}
+	componentDidMount() {
+		const data = [
 			{
 				receiver: 'ชาณิสสา ตรีทิพไกวัลพร1',
 				address: '219 ถนนพระราม2 แขวงบางมด เขตจอมทอง กรุงเทพฯ 10150',
@@ -35,7 +35,7 @@ class Complete extends Component {
 				receiver: 'ชาณิสสา ตรีทิพไกวัลพร',
 				address: '219 ถนนพระราม2 แขวงบางมด เขตจอมทอง กรุงเทพฯ 10150',
 				phone: '0837093547',
-				isComplete: false,
+				isComplete: true,
 			},
 			{
 				receiver: 'ชาณิสสา ตรีทิพไกวัลพร',
@@ -44,13 +44,28 @@ class Complete extends Component {
 				isComplete: true,
 			},
 		];
-		const completeTasks = data.filter(e => e.isComplete === true)
-    }
-    render() {
-        return (<div>
-
-        </div>)
-    }
+		const completeTasks = data.filter(e => e.isComplete === true);
+		this.setState({ completeTasks });
+	}
+	render() {
+		const {completeTasks} = this.state;
+		return (
+			<div className="container schedule">
+				<div className="row topic">งานที่สำเร็จ</div>
+				{
+					completeTasks.map((e, index) => {
+						return (
+							<div className="row" key={index}>
+								<div className="col">
+									<Card data={e} inProgress={false} isComplete={true}/>
+								</div>
+							</div>
+						);
+					})
+				}
+			</div>
+		);
+	}
 }
 
-export default Complete
+export default Complete;

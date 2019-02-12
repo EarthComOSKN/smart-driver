@@ -20,7 +20,11 @@ class Card extends Component {
 			confirmButtonColor: 'rgb(236,86,50)',
 			cancelButtonColor: 'rgb(129,129,129)',
 			confirmButtonText: 'ยืนยัน',
+<<<<<<< HEAD
+			cancelButtonText: 'ยกเลิกd',
+=======
 			cancelButtonText: 'ยกเลิกdd',
+>>>>>>> 4becda444c454ec21593af8e6f7237c5c50cfc79
 			reverseButtons: true,
 			showLoaderOnConfirm: true,
 			allowOutsideClick: () => !Swal.isLoading(),

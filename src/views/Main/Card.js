@@ -22,6 +22,15 @@ class Card extends Component {
 			confirmButtonText: 'ยืนยัน',
 			cancelButtonText: 'ยกเลิกdd',
 			reverseButtons: true,
+			showLoaderOnConfirm: true,
+			allowOutsideClick: () => !Swal.isLoading(),
+			preConfirm: async (data) => {
+				const res = await axios.get('https://api.chucknorris.io/jokes/random')
+				console.log(res);
+				console.log(data);
+				console.log('state',this.state);
+				return res.data.value
+			}
 		}).then(result => {
 			if (result.value) {
 				Swal.fire({

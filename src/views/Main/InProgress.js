@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 import Card from './Card';
 import '../../css/Layout.css';
 
@@ -9,8 +9,9 @@ class InProgress extends Component {
 		this.state = { completeTasks: [], inprogressTasks:[] };
 	}
 
-	componentDidMount() {
-		// const data = await axios.get("https://reqres.in/api/unknown");
+	async componentDidMount() {
+		// const data = await axios.get("http://iworks.ddns.net:8080/IW_ServiceTMS/IW_AppServer.asmx/Get_JobOrder?pTruckID=5JB1288");
+		// console.log(data);
 		const data = [
 			{
 				receiver: 'ชาณิสสา ตรีทิพไกวัลพร1',

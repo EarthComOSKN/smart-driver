@@ -37,7 +37,7 @@ class Card extends Component {
 					title:'ดำเนินการสำเร็จ',
 					customClass:'',
 					text:result.value,
-					type:'success',
+					type:'error',
 					confirmButtonColor:'rgb(236,86,50)'
 				});
 			}

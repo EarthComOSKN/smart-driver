@@ -20,7 +20,7 @@ class Card extends Component {
 			confirmButtonColor: 'rgb(236,86,50)',
 			cancelButtonColor: 'rgb(129,129,129)',
 			confirmButtonText: 'ยืนยัน',
-			cancelButtonText: 'ยกเลิก',
+			cancelButtonText: 'ยกเลิกd',
 			reverseButtons: true,
 		}).then(result => {
 			if (result.value) {

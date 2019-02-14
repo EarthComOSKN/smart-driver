@@ -5,6 +5,7 @@ import "../../css/Card.css";
 import axios from "axios";
 
 class Card extends Component {
+
   constructor() {
     super();
     this.state = { coords: {} };
@@ -33,6 +34,44 @@ class Card extends Component {
       }
     });
   }
+=======
+	constructor() {
+		super();
+		this.state = { coords: {} };
+	}
+	sendData() {}
+	confirmModal() {
+		const { data } = this.props;
+		Swal.fire({
+			title: 'ยืนยันการทำงาน',
+			text: `${data.CustName + ' ' + data.Address}`,
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: 'rgb(236,86,50)',
+			cancelButtonColor: 'rgb(129,129,129)',
+			confirmButtonText: 'ยืนยัน',
+			cancelButtonText: 'ยกเลิก',
+			reverseButtons: true,
+			showLoaderOnConfirm: true,
+			allowOutsideClick: () => !Swal.isLoading(),
+			preConfirm: async (data) => {
+				const res = await axios.get('https://api.chucknorris.io/jokes/random')
+				console.log(res);
+				console.log(data);
+				console.log('state',this.state);
+				return res.data.value
+			}
+		}).then(result => {
+			if (result.value) {
+				Swal.fire({
+					title: 'ดำเนินการสำเร็จ',
+					text: result.value,
+					type: 'success',
+					confirmButtonColor: 'rgb(236,86,50)',
+				});
+			}
+		});
+	}
 
   async showPosition(position) {
     const { coords } = position;

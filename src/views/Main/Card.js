@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import '../../css/Layout.css';
 import '../../css/Card.css';
 import axios from 'axios';
+import { config } from '../../config';
 
 class Card extends Component {
 	constructor() {
@@ -27,9 +28,9 @@ class Card extends Component {
 			preConfirm: async () => {
 				const { coords } = this.state;
 				console.log(this.state.coords);
-				const res = await axios.get('https://api.chucknorris.io/jokes/random');
-				console.log(res);
-				return res.data.value;
+				// const res = await axios.get(`${config.url}`);
+				// console.log(res);
+				// return res.data.value;
 			},
 		}).then(result => {
 			if (result.value) {

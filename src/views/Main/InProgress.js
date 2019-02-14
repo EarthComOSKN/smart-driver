@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
 import Card from './Card';
-import '../../css/Layout.css';
 import axios from 'axios';
+import { config } from '../../config';
+import '../../css/Layout.css';
 
 class InProgress extends Component {
 	constructor(props) {
@@ -10,141 +10,19 @@ class InProgress extends Component {
 		this.state = { inprogressTasks: [], currentTask: {} };
 	}
 
-	componentDidMount() {
-		// const data = await axios.get(`http://localhost:4000/getJobById/${}`);
-		const tmp = {
-			DataSet: {
-				schema: {
-					element: {
-						complexType: {
-							choice: {
-								element: {
-									complexType: {
-										sequence: {
-											element: [
-												{
-													_name: 'JobOrdNo',
-													_type: 'xs:string',
-													_minOccurs: '0',
-													__prefix: 'xs',
-												},
-												{
-													_name: 'SeqNo',
-													_type: 'xs:short',
-													_minOccurs: '0',
-													__prefix: 'xs',
-												},
-												{
-													_name: 'TuckID',
-													_type: 'xs:string',
-													_minOccurs: '0',
-													__prefix: 'xs',
-												},
-												{
-													_name: 'CustCode',
-													_type: 'xs:string',
-													_minOccurs: '0',
-													__prefix: 'xs',
-												},
-												{
-													_name: 'CustName',
-													_type: 'xs:string',
-													_minOccurs: '0',
-													__prefix: 'xs',
-												},
-												{
-													_name: 'Address',
-													_type: 'xs:string',
-													_minOccurs: '0',
-													__prefix: 'xs',
-												},
-												{
-													_name: 'ConfDate',
-													_type: 'xs:dateTime',
-													_minOccurs: '0',
-													__prefix: 'xs',
-												},
-												{
-													_name: 'status',
-													_type: 'xs:string',
-													_minOccurs: '0',
-													__prefix: 'xs',
-												},
-											],
-											__prefix: 'xs',
-										},
-										__prefix: 'xs',
-									},
-									_name: 'joborddtl1',
-									__prefix: 'xs',
-								},
-								_minOccurs: '0',
-								_maxOccurs: 'unbounded',
-								__prefix: 'xs',
-							},
-							__prefix: 'xs',
-						},
-						_name: 'NewDataSet',
-						'_msdata:IsDataSet': 'true',
-						'_msdata:UseCurrentLocale': 'true',
-						__prefix: 'xs',
-					},
-					_xmlns: '',
-					'_xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
-					'_xmlns:msdata': 'urn:schemas-microsoft-com:xml-msdata',
-					_id: 'NewDataSet',
-					__prefix: 'xs',
-				},
-				diffgram: {
-					NewDataSet: {
-						joborddtl1: [
-							{
-								JobOrdNo: 'J201901-00001',
-								SeqNo: '1',
-								TuckID: '5JB1288',
-								CustCode: 'LR0079',
-								CustName: 'Toyota Motor Asia Pacific Engineering & Manufacturing Co., Ltd',
-								Address: '99 Moo 5, T.Ban-Ragad, A.Bang Bor, SAMUTPRA Thailand 10560',
-								status: 'A',
-								'_diffgr:id': 'joborddtl11',
-								'_msdata:rowOrder': '0',
-							},
-							{
-								JobOrdNo: 'J201901-00001',
-								SeqNo: '2',
-								TuckID: '5JB1288',
-								CustCode: 'LP0192',
-								CustName: 'Darmex Petroleum (Thailand) Corp.',
-								Address: '3313/4 , Huamark, Bangpaki BANGKOK Thailand 10240',
-								status: 'A',
-								'_diffgr:id': 'joborddtl12',
-								'_msdata:rowOrder': '1',
-							},
-							{
-								JobOrdNo: 'J201901-00001',
-								SeqNo: '3',
-								TuckID: '5JB1288',
-								CustCode: 'LR0107-1',
-								CustName: 'Tri Petch Isuzu Sales Co., Ltd.',
-								Address:
-									'88/1-6 Romklao Rd., Minburi Subdistrict,Minburi District, BANGKOK Thailand 10510',
-								status: 'A',
-								'_diffgr:id': 'joborddtl13',
-								'_msdata:rowOrder': '2',
-							},
-						],
-						_xmlns: '',
-					},
-					'_xmlns:msdata': 'urn:schemas-microsoft-com:xml-msdata',
-					'_xmlns:diffgr': 'urn:schemas-microsoft-com:xml-diffgram-v1',
-					__prefix: 'diffgr',
-				},
-				_xmlns: 'http://tempuri.org/',
-			},
-		};
-		let data = tmp.DataSet.diffgram.NewDataSet.joborddtl1;
-		const currentTask = data.shift(0, 1);
-		this.setState({ inprogressTasks: data, currentTask });
+	async componentDidMount() {
+		const userId = localStorage.getItem('user');
+		const res = await axios.get(`${config.url}/getJobById/` + userId);
+		let { data } = res;
+		const allTask = data.sort((a, b) => {
+			return a.SeqNo > b.SeqNo;
+		});
+
+		console.log(allTask);
+
+		// let data = tmp.DataSet.diffgram.NewDataSet.joborddtl1;
+		const currentTask = allTask.shift(0, 1);
+		this.setState({ inprogressTasks: allTask, currentTask });
 		console.log('inprogress', data, 'current', currentTask);
 		// const values = queryString.parse(this.props.location.search)
 		// console.log(values);

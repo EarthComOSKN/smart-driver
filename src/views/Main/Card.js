@@ -20,21 +20,17 @@ class Card extends Component {
 			confirmButtonColor: 'rgb(236,86,50)',
 			cancelButtonColor: 'rgb(129,129,129)',
 			confirmButtonText: 'ยืนยัน',
-<<<<<<< HEAD
-			cancelButtonText: 'ยกเลิกd',
-=======
-			cancelButtonText: 'ยกเลิกdd',
->>>>>>> 4becda444c454ec21593af8e6f7237c5c50cfc79
+			cancelButtonText: 'ยกเลิก',
 			reverseButtons: true,
 			showLoaderOnConfirm: true,
 			allowOutsideClick: () => !Swal.isLoading(),
-			preConfirm: async (data) => {
-				const res = await axios.get('https://api.chucknorris.io/jokes/random')
+			preConfirm: async () => {
+				const { coords } = this.state;
+				console.log(this.state.coords);
+				const res = await axios.get('https://api.chucknorris.io/jokes/random');
 				console.log(res);
-				console.log(data);
-				console.log('state',this.state);
-				return res.data.value
-			}
+				return res.data.value;
+			},
 		}).then(result => {
 			if (result.value) {
 				Swal.fire({
@@ -46,17 +42,14 @@ class Card extends Component {
 			}
 		});
 	}
-
-	async showPosition(position) {
-		const { coords } = position;
-		console.log('coords', coords);
-		// this.setState({coords})
-	}
 	componentDidMount() {
 		const app = document.getElementById('container');
 		if (navigator.geolocation) {
 			try {
-				navigator.geolocation.getCurrentPosition(this.showPosition, this.error);
+				navigator.geolocation.getCurrentPosition(position => {
+					const { coords } = position;
+					this.setState({ coords });
+				}, this.error);
 			} catch (error) {
 				console.log(error);
 			}
@@ -65,16 +58,22 @@ class Card extends Component {
 		}
 	}
 	render() {
-		const { data, inProgress, coords, isComplete } = this.props;
+		const { data, inProgress, isComplete } = this.props;
 		return (
 			<div className="card container p-3" id="container">
 				<div className="row">
-					<div className="col-7">
-						<div className="detail">ผู้รับ : {data.CustName}</div>
-						<div className="detail">ที่อยู่ : {data.Address}</div>
-						<div className="detail">รหัสของผู้รับ : {data.CustCode}</div>
+					<div className="col-8">
+						<div className="detail">
+							<span className="font-weight-bold">ผู้รับ :</span>&nbsp;{data.CustName}
+						</div>
+						<div className="detail">
+							<span className="font-weight-bold">ที่อยู่ :</span>&nbsp;{data.Address}
+						</div>
+						<div className="detail">
+							<span className="font-weight-bold">รหัสของผู้รับ :</span>&nbsp;{data.CustCode}
+						</div>
 					</div>
-					<div className="col-3 p-0 d-flex align-items-center justify-content-center">
+					<div className="col-2 p-0 d-flex align-items-center justify-content-center">
 						{inProgress && (
 							<button
 								type="button"
@@ -89,7 +88,7 @@ class Card extends Component {
 					</div>
 					{isComplete ? (
 						<div className="col-2 p-0 d-flex flex-column align-items-center justify-content-center">
-							<i class="fas fa-check-circle"></i>
+							<i class="fas fa-check-circle" />
 							<div className="finish-text">สำเร็จเมื่อ 8:00 น.</div>
 						</div>
 					) : (
@@ -98,8 +97,7 @@ class Card extends Component {
 								className="location-icon"
 								src="https://cdn.iconscout.com/icon/free/png-256/pin-locate-marker-location-navigation-17-32419.png"
 								alt="location-icon"
-								// onClick={() => window.open(`http://maps.google.com?q=${coords.latitude},${coords.longtitude}`)}
-								onClick={() => window.open(`http://maps.google.com?q=48.8583736,2.2922926`)}
+								onClick={() => window.open(`http://maps.google.com?q=${data.Address}`)}
 							/>
 						</div>
 					)}

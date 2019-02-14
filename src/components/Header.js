@@ -8,17 +8,12 @@ class Header extends Component {
 		super();
 		this.state = {
 			inprogress: true,
-			complete: false,
 			user: null,
 		};
 	}
 	GoToInProgress() {
 		this.setState({ inprogress: true, complete: false });
 		this.props.history.push('/');
-	}
-	GoToComplete() {
-		this.setState({ inprogress: false, complete: true });
-		this.props.history.push('/complete');
 	}
 	componentDidMount() {
 		const query = queryString.parse(this.props.location.search);
@@ -47,12 +42,6 @@ class Header extends Component {
 						onClick={() => this.GoToInProgress()}
 					>
 						กำลังดำเนินการ
-					</div>
-					<div
-						className={'col txt-header pd-1 pointer' + (complete ? ' active' : '')}
-						onClick={() => this.GoToComplete()}
-					>
-						งานที่เสร็จแล้ว
 					</div>
 				</div>
 			</div>

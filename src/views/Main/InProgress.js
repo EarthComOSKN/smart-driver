@@ -11,7 +11,7 @@ class InProgress extends Component {
 	}
 
 	componentDidMount() {
-		// const data = await axios.get('http://203.195.103.19/IW_ServiceTMS/IW_AppServer.asmx/Get_JobOrder?pTruckID=5JB1288');
+		// const data = await axios.get(`http://localhost:4000/getJobById/${}`);
 		const tmp = {
 			DataSet: {
 				schema: {
@@ -162,7 +162,7 @@ class InProgress extends Component {
 				</div>
 				<div className="row d-flex justify-content-between topic">
 					<div>ตารางงาน</div>
-					<div>0/14 สำเร็จ</div>
+					<div>เหลือ&nbsp;{inprogressTasks.length}&nbsp;งาน</div>
 				</div>
 				{inprogressTasks.map((e, index) => {
 					return (

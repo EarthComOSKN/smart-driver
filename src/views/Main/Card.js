@@ -27,7 +27,9 @@ class Card extends Component {
 			showLoaderOnConfirm: true,
 			allowOutsideClick: () => !Swal.isLoading(),
 			preConfirm: async () => {
+				await this.getLocation();
 				const { coords } = this.state;
+				console.log(coords);
 				try {
 					const driverProfile = {
 						p_JobOrder: data.JobOrdNo,
@@ -39,6 +41,7 @@ class Card extends Component {
 						p_CnfDate: new Date(Date.now()),
 						p_SyUser: data['diffgr:id'],
 					};
+					console.log('earth', driverProfile);
 					//check the result
 					// console.log(driverProfile);
 					const res = await axios.post(`${config.url}/submitJob`, driverProfile);
@@ -61,30 +64,24 @@ class Card extends Component {
 			}
 		});
 	}
-	getLocationerror(err) {
-		console.warn(`ERROR(${err.code}): ${err.message}`);
-	}
-	componentDidMount() {
-		// check the props
-		// console.log(this.props.data);
+	async getLocation() {
 		const app = document.getElementById('container');
+		let coords = {};
 		if (navigator.geolocation) {
 			try {
-				navigator.geolocation.getCurrentPosition(
-					position => {
-						const { coords } = position;
-						console.log(coords);
-						this.setState({ coords });
-					},
-					this.getLocationerror,
-					{ timeout: 500, enableHighAccuracy: true }
-				);
+				navigator.geolocation.getCurrentPosition(position => {
+					const {coords} = position
+					this.setState({coords})
+				}, this.getLocationerror);
 			} catch (error) {
 				console.log(error);
 			}
 		} else {
 			app.innerHTML = 'Geolocation is not supported by this browser.';
 		}
+	}
+	getLocationerror(err) {
+		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 	render() {
 		const { data, inProgress, isComplete } = this.props;

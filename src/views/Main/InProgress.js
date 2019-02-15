@@ -13,19 +13,15 @@ class InProgress extends Component {
 	async componentDidMount() {
 		const userId = localStorage.getItem('user');
 		const res = await axios.get(`${config.url}/getJobById/` + userId);
-		let { data } = res;
+		console.log(res);
+		const data = res.data.DataSet['diffgr:diffgram'].NewDataSet.joborddtl1
+
 		const allTask = data.sort((a, b) => {
 			return a.SeqNo > b.SeqNo;
 		});
-
-		console.log(allTask);
-
-		// let data = tmp.DataSet.diffgram.NewDataSet.joborddtl1;
 		const currentTask = allTask.shift(0, 1);
 		this.setState({ inprogressTasks: allTask, currentTask });
 		console.log('inprogress', data, 'current', currentTask);
-		// const values = queryString.parse(this.props.location.search)
-		// console.log(values);
 	}
 
 	render() {

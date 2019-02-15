@@ -29,9 +29,11 @@ class Card extends Component {
 			showLoaderOnConfirm: true,
 			allowOutsideClick: () => !Swal.isLoading(),
 			preConfirm: async () => {
-				const { coords } = this.state;
-				const data ={
-					p_JobOrder : data.JobOrder,
+        const { coords } = this.state;
+        console.log(this.state);
+        console.log('dara',data,coords);
+				const sendData ={
+					p_JobOrder : data.JobOrdNo,
 					p_SeqNo : data.SeqNo,
 					p_TruckID : data.TuckID, //should be TruckID ?
 					p_CustCode : data.CustCode,
@@ -40,8 +42,8 @@ class Card extends Component {
 					p_CnfDate : new Date(Date.now()),
 					p_SyUser : data["diffgr:id"]
 				   }
-				const res = await axios.post(`${config.url}/submitJob`,data);
-				console.log(res);
+				// const res = await axios.post(`${config.url}/submitJob`,sendData);
+				console.log(sendData);
 				// return res.data.value;
 			},
 		}).then(result => {
@@ -59,7 +61,9 @@ class Card extends Component {
 		const app = document.getElementById('container');
 		if (navigator.geolocation) {
 			try {
+        console.log('get Corr',navigator);
 				navigator.geolocation.getCurrentPosition(position => {
+          console.log('po',position)
 					const { coords } = position;
 					this.setState({ coords });
 				}, this.error);

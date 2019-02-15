@@ -12,7 +12,8 @@ class Card extends Component {
 	}
 
 	sendData() {}
-	confirmModal() {
+	async confirmModal() {
+		await this.getLocation();
 		const { data } = this.props;
 		Swal.fire({
 			title: 'ยืนยันการทำงาน',
@@ -27,7 +28,6 @@ class Card extends Component {
 			showLoaderOnConfirm: true,
 			allowOutsideClick: () => !Swal.isLoading(),
 			preConfirm: async () => {
-				await this.getLocation();
 				const { coords } = this.state;
 				console.log(coords);
 				try {
@@ -41,9 +41,8 @@ class Card extends Component {
 						p_CnfDate: new Date(Date.now()),
 						p_SyUser: data['diffgr:id'],
 					};
-					console.log('earth', driverProfile);
 					//check the result
-					// console.log(driverProfile);
+					console.log(driverProfile);
 					const res = await axios.post(`${config.url}/submitJob`, driverProfile);
 					console.log(res);
 				} catch (error) {
@@ -64,14 +63,13 @@ class Card extends Component {
 			}
 		});
 	}
-	async getLocation() {
+	getLocation() {
 		const app = document.getElementById('container');
-		let coords = {};
 		if (navigator.geolocation) {
 			try {
-				navigator.geolocation.getCurrentPosition(position => {
-					const {coords} = position
-					this.setState({coords})
+				navigator.geolocation.getCurrentPosition(async position => {
+					const { coords } = position;
+					await this.setState({ coords });
 				}, this.getLocationerror);
 			} catch (error) {
 				console.log(error);

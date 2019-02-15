@@ -27,9 +27,18 @@ class Card extends Component {
 			allowOutsideClick: () => !Swal.isLoading(),
 			preConfirm: async () => {
 				const { coords } = this.state;
-				console.log(this.state.coords);
-				// const res = await axios.get(`${config.url}`);
-				// console.log(res);
+				const data ={
+					p_JobOrder : data.JobOrder,
+					p_SeqNo : data.SeqNo,
+					p_TruckID : data.TuckID, //should be TruckID ?
+					p_CustCode : data.CustCode,
+					p_Latitude : coords.latitude,
+					p_Longitude : coords.longtitude,
+					p_CnfDate : new Date(Date.now()),
+					p_SyUser : data["diffgr:id"]
+				   }
+				const res = await axios.post(`${config.url}/submitJob`,data);
+				console.log(res);
 				// return res.data.value;
 			},
 		}).then(result => {

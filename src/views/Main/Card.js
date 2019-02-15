@@ -10,35 +10,8 @@ class Card extends Component {
     super();
     this.state = { coords: {} };
   }
-  sendData() {}
-  confirmModal() {
-    const { data } = this.props;
-    Swal.fire({
-      title: "ยืนยันการทำงาน",
-      text: `${data.CustName + " " + data.Address}`,
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "rgb(236,86,50)",
-      cancelButtonColor: "rgb(129,129,129)",
-      confirmButtonText: "ยืนยัน",
-      cancelButtonText: "ยกเลิก",
-      reverseButtons: true
-    }).then(result => {
-      if (result.value) {
-        Swal.fire({
-          title: "ดำเนินการสำเร็จ",
-          text: result.value,
-          type: "success",
-          confirmButtonColor: "rgb(236,86,50)"
-        });
-      }
-    });
-  }
-=======
-	constructor() {
-		super();
-		this.state = { coords: {} };
-	}
+
+
 	sendData() {}
 	confirmModal() {
 		const { data } = this.props;

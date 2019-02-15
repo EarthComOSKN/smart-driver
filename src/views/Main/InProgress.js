@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Card from './Card';
 import axios from 'axios';
 import { config } from '../../config';
+import Swal from 'sweetalert2';
 import '../../css/Layout.css';
 
 class InProgress extends Component {
@@ -9,12 +10,9 @@ class InProgress extends Component {
 		super(props);
 		this.state = { inprogressTasks: [], currentTask: {} };
 	}
-
-	async componentDidMount() {
-		const userId = localStorage.getItem('user');
+	async getTasks(userId) {
 		const res = await axios.get(`${config.url}/getJobById/` + userId);
-		console.log(res);
-		const data = res.data.DataSet['diffgr:diffgram'].NewDataSet.joborddtl1
+		const data = res.data.DataSet['diffgr:diffgram'].NewDataSet.joborddtl1;
 
 		const allTask = data.sort((a, b) => {
 			return a.SeqNo > b.SeqNo;
@@ -23,7 +21,38 @@ class InProgress extends Component {
 		this.setState({ inprogressTasks: allTask, currentTask });
 		console.log('inprogress', data, 'current', currentTask);
 	}
-
+	async componentDidMount() {
+		const userId = localStorage.getItem('user');
+		if (userId) {
+			try {
+				this.getTasks(userId);
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			Swal.fire({
+				title: 'กรุณากรอกรหัสคนขับรถ',
+				input: 'text',
+				inputAttributes: {
+					autocapitalize: 'on',
+				},
+				showCancelButton: true,
+				confirmButtonText: 'Look up',
+				showLoaderOnConfirm: true,
+				allowOutsideClick: () => !Swal.isLoading(),
+			}).then(result => {
+				if (result.value) {
+					console.log(result.value);
+					localStorage.setItem('user', result.value);
+					try {
+						this.getTasks(result.value);
+					} catch (error) {
+						console.log(error);
+					}
+				}
+			});
+		}
+	}
 	render() {
 		const { inprogressTasks, currentTask } = this.state;
 		return (

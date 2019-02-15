@@ -73,11 +73,11 @@ class Card extends Component {
 				navigator.geolocation.getCurrentPosition(
 					position => {
 						const { coords } = position;
-						console.log(coords);
+						console.log('coords',coords);
 						this.setState({ coords });
 					},
 					this.getLocationerror,
-					{ timeout: 500, enableHighAccuracy: true }
+					{ timeout: 1000, enableHighAccuracy: true }
 				);
 			} catch (error) {
 				console.log(error);

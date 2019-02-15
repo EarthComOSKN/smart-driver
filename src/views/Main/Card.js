@@ -6,12 +6,10 @@ import axios from 'axios';
 import { config } from '../../config';
 
 class Card extends Component {
-
-  constructor() {
-    super();
-    this.state = { coords: {} };
-  }
-
+	constructor() {
+		super();
+		this.state = { coords: {} };
+	}
 
 	sendData() {}
 	confirmModal() {
@@ -41,7 +39,8 @@ class Card extends Component {
 						p_CnfDate: new Date(Date.now()),
 						p_SyUser: data['diffgr:id'],
 					};
-					console.log(driverProfile);
+					//check the result
+					// console.log(driverProfile);
 					const res = await axios.post(`${config.url}/submitJob`, driverProfile);
 					console.log(res);
 				} catch (error) {
@@ -54,15 +53,20 @@ class Card extends Component {
 			if (result.value) {
 				Swal.fire({
 					title: 'ดำเนินการสำเร็จ',
-					text: result.value,
 					type: 'success',
 					confirmButtonColor: 'rgb(236,86,50)',
 				});
+			} else {
+				Swal.fire({});
 			}
 		});
 	}
+	getLocationerror(err) {
+		console.warn(`ERROR(${err.code}): ${err.message}`);
+	}
 	componentDidMount() {
-		console.log(this.props.data);
+		// check the props
+		// console.log(this.props.data);
 		const app = document.getElementById('container');
 		if (navigator.geolocation) {
 			try {
@@ -72,7 +76,7 @@ class Card extends Component {
 						console.log(coords);
 						this.setState({ coords });
 					},
-					this.error,
+					this.getLocationerror,
 					{ timeout: 500, enableHighAccuracy: true }
 				);
 			} catch (error) {

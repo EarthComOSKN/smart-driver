@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
 import Card from './Card';
-import '../../css/Layout.css';
 import axios from 'axios';
+import { config } from '../../config';
+import '../../css/Layout.css';
 
 class InProgress extends Component {
 	constructor(props) {
@@ -11,15 +11,15 @@ class InProgress extends Component {
 	}
 
 	async componentDidMount() {
-		const userId = localStorage.getItem('user')
-		const res = await axios.get('http://localhost:4000/getJobById/'+userId);
-		let {data} =res ;
-		const allTask = data.sort((a,b) => {
-			return a.SeqNo > b.SeqNo
-		})
+		const userId = localStorage.getItem('user');
+		const res = await axios.get(`${config.url}/getJobById/` + userId);
+		let { data } = res;
+		const allTask = data.sort((a, b) => {
+			return a.SeqNo > b.SeqNo;
+		});
 
 		console.log(allTask);
-		
+
 		// let data = tmp.DataSet.diffgram.NewDataSet.joborddtl1;
 		const currentTask = allTask.shift(0, 1);
 		this.setState({ inprogressTasks: allTask, currentTask });
@@ -40,7 +40,7 @@ class InProgress extends Component {
 				</div>
 				<div className="row d-flex justify-content-between topic">
 					<div>ตารางงาน</div>
-					<div>เหลือ {this.state.inprogressTasks.length} งาน</div>
+					<div>เหลือ&nbsp;{inprogressTasks.length}&nbsp;งาน</div>
 				</div>
 				{inprogressTasks.map((e, index) => {
 					return (

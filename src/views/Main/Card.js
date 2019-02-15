@@ -1,21 +1,16 @@
-import React, { Component } from "react";
-import Swal from "sweetalert2";
-import "../../css/Layout.css";
-import "../../css/Card.css";
-import axios from "axios";
-import { config } from "../../config";
-
-
-
-
+import React, { Component } from 'react';
+import Swal from 'sweetalert2';
+import '../../css/Layout.css';
+import '../../css/Card.css';
+import axios from 'axios';
+import { config } from '../../config';
 
 class Card extends Component {
-  constructor() {
-    super();
-    this.state = { coords: {} };
-  }
-	sendData() {}
-  async confirmModal() {
+	constructor() {
+		super();
+		this.state = { coords: {} };
+	}
+	async confirmModal() {
 		await this.getLocation();
 		const { data } = this.props;
 		Swal.fire({
@@ -45,20 +40,19 @@ class Card extends Component {
 					};
 					console.log(driverProfile);
 					await axios.post(`${config.url}/submitJob`, driverProfile);
+					return driverProfile;
 				} catch (error) {
 					console.log(error);
 				}
-
 			},
 		}).then(result => {
+			console.log(result.value);
 			if (result.value) {
 				Swal.fire({
-					title: 'ดำเนินการสำเร็จ',
+					title: `ดำเนินการสำเร็จ ${result.value.p_Latitude} + ${result.value.p_Longitude}`,
 					type: 'success',
 					confirmButtonColor: 'rgb(236,86,50)',
 				});
-			} else {
-				Swal.fire({});
 			}
 		});
 	}
@@ -66,10 +60,14 @@ class Card extends Component {
 		const app = document.getElementById('container');
 		if (navigator.geolocation) {
 			try {
-				navigator.geolocation.getCurrentPosition(async position => {
-					const { coords } = position;
-					await this.setState({ coords });
-				}, this.getLocationerror);
+				navigator.geolocation.getCurrentPosition(
+					async position => {
+						const { coords } = position;
+						await this.setState({ coords });
+					},
+					this.getLocationerror,
+					{ enableHighAccuracy: true, timeout: 2000, maximumAge: 3600000 }
+				);
 			} catch (error) {
 				console.log(error);
 			}

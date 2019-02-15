@@ -6,10 +6,13 @@ import axios from 'axios';
 import { config } from '../../config';
 
 class Card extends Component {
-	constructor() {
-		super();
-		this.state = { coords: {} };
-	}
+
+  constructor() {
+    super();
+    this.state = { coords: {} };
+  }
+
+
 	sendData() {}
 	confirmModal() {
 		const { data } = this.props;

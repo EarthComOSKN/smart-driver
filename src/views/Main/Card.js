@@ -58,16 +58,13 @@ class Card extends Component {
 	}
 	getLocation() {
 		const app = document.getElementById('container');
-		if (navigator.geolocation) {
+		if (window.navigator.geolocation ) {
 			try {
-				navigator.geolocation.getCurrentPosition(
-					async position => {
-						const { coords } = position;
-						await this.setState({ coords });
-					},
-					this.getLocationerror,
-					{ enableHighAccuracy: true, timeout: 2000, maximumAge: 3600000 }
-				);
+				window.navigator.geolocation.getCurrentPosition(async position => {
+					const { coords } = position;
+					console.log(coords);
+					await this.setState({ coords });
+				}, this.getLocationerror,{timeout:50000});
 			} catch (error) {
 				console.log(error);
 			}
@@ -76,6 +73,7 @@ class Card extends Component {
 		}
 	}
 	getLocationerror(err) {
+		console.log(err);
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 	render() {

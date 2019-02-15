@@ -29,7 +29,6 @@ class Card extends Component {
 			allowOutsideClick: () => !Swal.isLoading(),
 			preConfirm: async () => {
 				const { coords } = this.state;
-				console.log(coords);
 				try {
 					const driverProfile = {
 						p_JobOrder: data.JobOrdNo,
@@ -41,15 +40,11 @@ class Card extends Component {
 						p_CnfDate: new Date(Date.now()),
 						p_SyUser: data['diffgr:id'],
 					};
-					//check the result
-					console.log(driverProfile);
-					const res = await axios.post(`${config.url}/submitJob`, driverProfile);
-					console.log(res);
+					await axios.post(`${config.url}/submitJob`, driverProfile);
 				} catch (error) {
 					console.log(error);
 				}
 
-				// return res.data.value;
 			},
 		}).then(result => {
 			if (result.value) {

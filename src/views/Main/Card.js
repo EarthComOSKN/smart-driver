@@ -29,6 +29,7 @@ class Card extends Component {
 			showLoaderOnConfirm: true,
 			allowOutsideClick: () => !Swal.isLoading(),
 			preConfirm: async () => {
+<<<<<<< HEAD
         const { coords } = this.state;
         console.log(this.state);
         console.log('dara',data,coords);
@@ -44,6 +45,27 @@ class Card extends Component {
 				   }
 				// const res = await axios.post(`${config.url}/submitJob`,sendData);
 				console.log(sendData);
+=======
+				const { coords } = this.state;
+				try {
+					const driverProfile = {
+						p_JobOrder: data.JobOrdNo,
+						p_SeqNo: data.SeqNo,
+						p_TruckID: data.TuckID, //should be TruckID ?
+						p_CustCode: data.CustCode,
+						p_Latitude: coords.latitude,
+						p_Longitude: coords.longitude,
+						p_CnfDate: new Date(Date.now()),
+						p_SyUser: data['diffgr:id'],
+					};
+					console.log(driverProfile);
+					const res = await axios.post(`${config.url}/submitJob`, driverProfile);
+					console.log(res);
+				} catch (error) {
+					console.log(error);
+				}
+
+>>>>>>> 8c74726e6de1111aab3851976e4e03626fd2e437
 				// return res.data.value;
 			},
 		}).then(result => {
@@ -58,15 +80,28 @@ class Card extends Component {
 		});
 	}
 	componentDidMount() {
+		console.log(this.props.data);
 		const app = document.getElementById('container');
 		if (navigator.geolocation) {
 			try {
+<<<<<<< HEAD
         console.log('get Corr',navigator);
 				navigator.geolocation.getCurrentPosition(position => {
           console.log('po',position)
 					const { coords } = position;
 					this.setState({ coords });
 				}, this.error);
+=======
+				navigator.geolocation.getCurrentPosition(
+					position => {
+						const { coords } = position;
+						console.log(coords);
+						this.setState({ coords });
+					},
+					this.error,
+					{ timeout: 500, enableHighAccuracy: true }
+				);
+>>>>>>> 8c74726e6de1111aab3851976e4e03626fd2e437
 			} catch (error) {
 				console.log(error);
 			}

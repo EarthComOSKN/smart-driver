@@ -1,21 +1,17 @@
-import React, { Component } from "react";
-import Swal from "sweetalert2";
-import "../../css/Layout.css";
-import "../../css/Card.css";
-import axios from "axios";
-import { config } from "../../config";
-import getLocation, { setup as getLocationSetup } from '@prepair/get-location';
-
-
-
+import React, { Component } from 'react';
+import Swal from 'sweetalert2';
+import '../../css/Layout.css';
+import '../../css/Card.css';
+import axios from 'axios';
+import { config } from '../../config';
 
 class Card extends Component {
-  constructor() {
-    super();
-    this.state = { coords: {} };
-  }
-	sendData() {}
-  async confirmModal() {
+	constructor() {
+		super();
+		this.state = { coords: {} };
+	}
+
+	async confirmModal() {
 		await this.getLocation();
 		const { data } = this.props;
 		Swal.fire({
@@ -43,6 +39,7 @@ class Card extends Component {
 						p_CnfDate: new Date(Date.now()),
 						p_SyUser: data['diffgr:id'],
 					};
+					console.log(driverProfile)
 					await axios.post(`${config.url}/submitJob`, driverProfile);
 				} catch (error) {
 					console.log(error);

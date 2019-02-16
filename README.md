@@ -1,5 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+##Instruction
+
+* using Homebrew on install node first
+    brew node
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
 ## Available Scripts
 
 In the project directory, you can run:
